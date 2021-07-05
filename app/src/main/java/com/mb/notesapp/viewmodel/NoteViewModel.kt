@@ -8,6 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.mb.notesapp.model.NoteModel
 import com.mb.notesapp.repository.NoteRepository
 import kotlinx.coroutines.launch
+import androidx.recyclerview.widget.RecyclerView
+
+import androidx.recyclerview.widget.ItemTouchHelper
+
+
+
 
 class NoteViewModel(private val noteRepository : NoteRepository)  : ViewModel() {
 
@@ -31,10 +37,4 @@ class NoteViewModel(private val noteRepository : NoteRepository)  : ViewModel() 
     }
 
     fun orderAndGetAll() = noteRepository.getAll()
-
-
-
-
-
-
 }

@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mb.notesapp.adapter.NoteListAdapter
 import com.mb.notesapp.databinding.FragmentNotesBinding
 import com.mb.notesapp.infra.BaseFragment
@@ -54,5 +56,23 @@ class NotesFragment : BaseFragment() {
             adapter.noteList.addAll(it)
             adapter.notifyDataSetChanged()
         })
+
+        var mIth = ItemTouchHelper(
+            object : ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                ItemTouchHelper.LEFT
+            ) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    viewModel.deleteNote(adapter.noteList[viewHolder.adapterPosition])
+                }
+            }).attachToRecyclerView(binding.recyclerView)
     }
 }
