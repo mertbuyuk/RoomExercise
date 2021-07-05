@@ -39,7 +39,7 @@ class AddNotesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         binding.numberPickerPriority.minValue = 1
-        binding.numberPickerPriority.maxValue = 10
+        binding.numberPickerPriority.maxValue = 12
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -57,7 +57,7 @@ class AddNotesFragment : BaseFragment() {
     private fun save(){
         var title : String = binding.editTextTitle.text.toString()
         var desc : String = binding.editTextDescription.text.toString()
-        var priority : String = binding.numberPickerPriority.value.toString()
+        var priority : Int = binding.numberPickerPriority.value
 
         val note = NoteModel(_title = title,_description = desc,_priority = priority)
 

@@ -18,7 +18,7 @@ fun getDatabase(context: Context){
         instance = Room.databaseBuilder(
             context,
             NoteDatabase::class.java,"note-db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
             }
 }
 

@@ -11,9 +11,9 @@ data class NoteModel(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    private var _title: String ="",
-    private var _description: String="",
-    private var _priority: String=""
+    private var _title: String,
+    private var _description: String,
+    private var _priority: Int
 ){
 
     val title get() = _title
