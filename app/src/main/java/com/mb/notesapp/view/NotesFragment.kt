@@ -1,10 +1,16 @@
 package com.mb.notesapp.view
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -12,6 +18,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mb.notesapp.R
 import com.mb.notesapp.adapter.NoteListAdapter
 import com.mb.notesapp.databinding.FragmentNotesBinding
 import com.mb.notesapp.infra.BaseFragment
@@ -44,7 +51,7 @@ class NotesFragment : BaseFragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-
+        setHasOptionsMenu(true)
 
         binding.fab.setOnClickListener{
             val action = NotesFragmentDirections.actionNotesFragmentToAddNotesFragment()
@@ -74,5 +81,36 @@ class NotesFragment : BaseFragment() {
                     viewModel.deleteNote(adapter.noteList[viewHolder.adapterPosition])
                 }
             }).attachToRecyclerView(binding.recyclerView)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.mainpage_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.deleteAll_item -> deleteNotes()
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteNotes() {
+        val alert = AlertDialog.Builder(requireContext(),R.style.CustomDialog)
+
+        alert.setTitle("Are you sure?")
+
+        alert.setMessage("Do you want to delete all notes?")
+        alert.setCancelable(false)
+        alert.setIcon(R.drawable.ic_trash)
+
+        alert.setPositiveButton("Yes") { dialogInterface: DialogInterface, i: Int ->
+            viewModel.deleteAll()
+             }
+        alert.setNegativeButton("No") {dialogInterface : DialogInterface, i:Int ->
+            dialogInterface.cancel()
+        }
+        alert.show()
     }
 }
